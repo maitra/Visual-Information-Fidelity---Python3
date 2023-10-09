@@ -1,18 +1,18 @@
 import numpy as np
 from numpy.linalg import inv
-import pyPyrTools as ppt
-from pyPyrTools.corrDn import corrDn
+from Spyr import Spyr
+from corrDn import corrDn
 import math
 
 def vifvec(imref_batch,imdist_batch):
-    M = 3
+    M = 32
     subbands = [4, 7, 10, 13, 16, 19, 22, 25]
     sigma_nsq = 0.4
     
     batch_num =1
     if imref_batch.ndim >= 3: 
         batch_num = imref_batch.shape[0]
-    
+        
     vif = np.zeros([batch_num,])
     
     for a in range(batch_num):
@@ -22,12 +22,12 @@ def vifvec(imref_batch,imdist_batch):
         else:
             imref = imref_batch
             imdist = imdist_batch
-        
+            
         #Wavelet Decomposition
-        pyr = ppt.Spyr(imref, 4, 'sp5Filters', 'reflect1')
+        pyr = Spyr(imref, 4, "sp5Filters", "reflect1")
         org = pyr.pyr[::-1]     #reverse list
         
-        pyr = ppt.Spyr(imdist, 4, 'sp5Filters', 'reflect1')
+        pyr = Spyr(imdist, 4, "sp5Filters", "reflect1")
         dist = pyr.pyr[::-1]
         
         #Calculate parameters of the distortion channel
@@ -63,14 +63,14 @@ def vifvec(imref_batch,imdist_batch):
                 temp1 += np.sum(np.log2(1 + np.divide(np.multiply(np.multiply(g,g),ss) * lam[j], vv + sigma_nsq))) #distorted image information
                 temp2 += np.sum(np.log2(1 + np.divide(ss * lam[j], sigma_nsq))) #reference image information
                 rt.append(np.sum(np.log(1 + np.divide(ss * lam[j], sigma_nsq))))
-            
+                
             num[0,i] = temp1
             den[0,i] = temp2
-        
+            
         vif[a] = np.sum(num)/np.sum(den)
-    print(vif)
+        print(vif)
     return vif
-        
+
 
 def vif_sub_est_M(org, dist, subbands, M):
     tol = 1e-15         #tolerance for zero variance
@@ -103,7 +103,7 @@ def vif_sub_est_M(org, dist, subbands, M):
         
         #covariance
         cov_xy = corrDn(np.multiply(y, yn), win, 'reflect1', winstep, winstart, winstop) - \
-        np.sum(win) * np.multiply(mean_x,mean_y)
+            np.sum(win) * np.multiply(mean_x,mean_y)
         
         #variance
         ss_x = corrDn(np.multiply(y,y), win, 'reflect1', winstep, winstart, winstop) - np.sum(win) * np.multiply(mean_x,mean_x)
@@ -131,7 +131,7 @@ def vif_sub_est_M(org, dist, subbands, M):
         
         g_all.append(g)
         vv_all.append(vv)
-    
+        
     return g_all, vv_all
 
 def refparams_vecgsm(org, subbands, M):
@@ -150,7 +150,7 @@ def refparams_vecgsm(org, subbands, M):
         for j in range(M):
             for k in range(M):
                 temp.append(y[k:y.shape[0]-M+k+1,j:y.shape[1]-M+j+1].T.reshape(-1))
-        
+                
         temp = np.asarray(temp)
         mcu = np.mean(temp, axis=1).reshape(temp.shape[0],1)
         mean_sub = temp - np.repeat(mcu,temp.shape[1],axis=1)
@@ -160,7 +160,7 @@ def refparams_vecgsm(org, subbands, M):
         for j in range(M):
             for k in range(M):
                 temp.append(y[k::M,j::M].T.reshape(-1))
-        
+                
         temp = np.asarray(temp)
         ss = inv(cu) @ temp
         ss = np.sum(np.multiply(ss,temp),axis=0)/(M**2)
@@ -170,5 +170,5 @@ def refparams_vecgsm(org, subbands, M):
         l_arr.append(d)
         ssarr.append(ss)
         cu_arr.append(cu)
-    
+        
     return ssarr, l_arr, cu_arr

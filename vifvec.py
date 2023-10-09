@@ -5,7 +5,7 @@ from corrDn import corrDn
 import math
 
 def vifvec(imref_batch,imdist_batch):
-    M = 32
+    M = 3
     subbands = [4, 7, 10, 13, 16, 19, 22, 25]
     sigma_nsq = 0.4
     

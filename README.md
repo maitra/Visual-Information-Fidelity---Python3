@@ -9,9 +9,19 @@ This repository contains python implementation of steerable pyramid version of V
 
 I needed python-PyQt4, pypy-libs (for tkinter), python3-matplotlib, python3-imaging, python3-scipy and python-numpy packages from Fedora's repositories.
 
+Needs compilation of C programs:
+
+gcc -c -fPIC  convolve.c wrap.c edges.c -std=c17 -Wall -pedantic
+
+and building the shared library:
+
+gcc -shared -o wrapConv.so convolve.o edges.o wrap.o
+
 ## Usage
 Let imref and imdist denote reference and distorted images respectively. Then the VIF value is calculated as
 VIF = vifvec(imref, imdist)
+
+gives the answer 0.07073818 for M=3 in vifvec.py
 
 A demo code is provided in test.py for testing purposes
 

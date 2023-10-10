@@ -1,6 +1,6 @@
 # Visual-Information-Fidelity (VIF) - Python3
 
-This repository contains Python3 implementation of the steerable pyramid version of Visual Information Fidelity (VIF) proposed in [1]. This is a fork of the original Python2 code that was a replication of MATLAB version released by the authors of [1] which is available [HERE](http://live.ece.utexas.edu/research/Quality/ifcvec_release.zip).
+This repository contains Python3 implementation of the steerable pyramid version of Visual Information Fidelity (VIF) proposed in [1]. This is a fork of the original Python2 code that was a replicate of the MATLAB code released by the authors of [1] which is available [HERE](http://live.ece.utexas.edu/research/Quality/ifcvec_release.zip).
 
 ## Dependencies
 1) Python (>=3.5)
@@ -9,7 +9,7 @@ This repository contains Python3 implementation of the steerable pyramid version
 
 I needed python-PyQt4, pypy-libs (for tkinter), python3-matplotlib, python3-imaging, python3-scipy and python-numpy packages from Fedora's repositories.
 
-Needs compilation of C programs:
+The use of this code needs compilation of three C programs into a shared object:
 
 gcc -c -fPIC  convolve.c wrap.c edges.c -std=c17 -Wall -pedantic
 

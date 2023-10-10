@@ -4,10 +4,9 @@ from Spyr import Spyr
 from corrDn import corrDn
 import math
 
-def vifvec(imref_batch,imdist_batch):
-    M = 3
+def vifvec(imref_batch,imdist_batch, sigmasq, M):
     subbands = [4, 7, 10, 13, 16, 19, 22, 25]
-    sigma_nsq = 0.4
+    sigma_nsq = sigmasq
     
     batch_num =1
     if imref_batch.ndim >= 3: 
@@ -68,7 +67,6 @@ def vifvec(imref_batch,imdist_batch):
             den[0,i] = temp2
             
         vif[a] = np.sum(num)/np.sum(den)
-        print(vif)
     return vif
 
 

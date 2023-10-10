@@ -18,12 +18,12 @@ and building the shared library:
 gcc -shared -o wrapConv.so convolve.o edges.o wrap.o
 
 ## Usage
-Let imref and imdist denote reference and distorted images respectively. Then the VIF value is calculated as
-VIF = vifvec(imref, imdist)
+Let imref and imdist denote reference and distorted images respectively. Furhter, let sigmasq be the noise variance, and M be the size of the block (to give a MxM block).  Then the VIF value is calculated as
+VIF = vifvec(imref, imdist, sigmasq, M)
 
 
 A demo code is provided in test.py for testing purposes
 
-python3 ./test.py bikes.bmp img29.bmp 
+python3 ./test.py ultadanga.tiff ultadanga-64-rgb.png 1 7
 
 [1]H.R. Sheikh, A.C. Bovik and G. de Veciana, "An information fidelity criterion for image quality assessment using natural scene statistics," IEEE Transactions on Image Processing , vol.14, no.12pp. 2117- 2128, Dec. 2005.

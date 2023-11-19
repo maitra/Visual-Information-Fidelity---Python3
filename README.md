@@ -18,7 +18,7 @@ and building the shared library:
 gcc -shared -o wrapConv.so convolve.o edges.o wrap.o
 
 ## Usage
-Let imref and imdist denote reference and distorted images respectively. Furhter, let sigmasq be the noise variance, and M be the size of the block (to give a MxM block).  Then the VIF value is calculated as
+Let imref and imdist denote reference and distorted images respectively. Further, let sigmasq be the noise variance, and M be the size of the block (to give a MxM block).  Then the VIF value is calculated as
 VIF = vifvec(imref, imdist, sigmasq, M)
 
 

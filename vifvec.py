@@ -29,9 +29,6 @@ def vifvec(imref_batch,imdist_batch, sigmasq, M):
         pyr = Spyr(imdist, 4, "sp5Filters", "reflect1")
         dist = pyr.pyr[::-1]
         
-        print(org[4].shape)
-        print(dist[4].shape)
-     
         #Calculate parameters of the distortion channel
         g_all, vv_all = vif_sub_est_M(org, dist, subbands, M)
         
@@ -83,12 +80,6 @@ def vif_sub_est_M(org, dist, subbands, M):
         y = org[sub-1]
         yn = dist[sub-1]
         
-        print(len(org), len(dist))
-
-        print(yn.shape)
-        print(y.shape)
-        print(sub)
-
         #size of window used in distortion channel estimation
         lev = math.ceil((sub - 1)/6)
         winsize = 2**lev + 1

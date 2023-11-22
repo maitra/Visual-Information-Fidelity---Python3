@@ -29,6 +29,9 @@ def vifvec(imref_batch,imdist_batch, sigmasq, M):
         pyr = Spyr(imdist, 4, "sp5Filters", "reflect1")
         dist = pyr.pyr[::-1]
         
+        print(org[4].shape)
+        print(dist[4].shape)
+     
         #Calculate parameters of the distortion channel
         g_all, vv_all = vif_sub_est_M(org, dist, subbands, M)
         
@@ -37,7 +40,7 @@ def vifvec(imref_batch,imdist_batch, sigmasq, M):
         
         num = np.zeros([1,len(subbands)])
         den = np.zeros([1,len(subbands)])
-        
+             
         for i in range(len(subbands)):
             sub = subbands[i]
             g = g_all[i]
@@ -74,12 +77,18 @@ def vif_sub_est_M(org, dist, subbands, M):
     tol = 1e-15         #tolerance for zero variance
     g_all = []
     vv_all = []
-    
+
     for i in range(len(subbands)):
         sub = subbands[i]
         y = org[sub-1]
         yn = dist[sub-1]
         
+        print(len(org), len(dist))
+
+        print(yn.shape)
+        print(y.shape)
+        print(sub)
+
         #size of window used in distortion channel estimation
         lev = math.ceil((sub - 1)/6)
         winsize = 2**lev + 1
@@ -89,7 +98,7 @@ def vif_sub_est_M(org, dist, subbands, M):
         newsize = [math.floor(y.shape[0]/M) * M, math.floor(y.shape[1]/M) * M]
         y = y[:newsize[0],:newsize[1]]
         yn = yn[:newsize[0],:newsize[1]]
-        
+
         #correlation with downsampling
         winstep = (M, M)
         winstart = (math.floor(M/2) ,math.floor(M/2))
@@ -98,7 +107,9 @@ def vif_sub_est_M(org, dist, subbands, M):
         #mean
         mean_x = corrDn(y, win/np.sum(win), 'reflect1', winstep, winstart, winstop)
         mean_y = corrDn(yn, win/np.sum(win), 'reflect1', winstep, winstart, winstop)
-        
+
+        # zn = np.pad(yn, ((0, y.shape[0] - yn.shape[0]), (0, y.shape[1] - yn.shape[1])))
+
         #covariance
         cov_xy = corrDn(np.multiply(y, yn), win, 'reflect1', winstep, winstart, winstop) - \
             np.sum(win) * np.multiply(mean_x,mean_y)

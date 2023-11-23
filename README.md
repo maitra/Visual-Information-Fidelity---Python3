@@ -22,10 +22,24 @@ Let imref and imdist denote reference and distorted images respectively. Further
 VIF = vifvec(imref, imdist, sigmasq, M)
 
 
-A demo code is provided in test.py for testing purposes with some example datasets:
+A demo code is provided in test.py for testing purposes with some example datasets and their k-means color quantized representations in some colorspaces, as well as their answers:
 
-_python3 ./test.py ultadanga.tiff ultadanga-64-rgb.png 1 7
-This yields: _0.8014978518810658
+python3 ./test.py ultadanga.tiff ultadanga-64-rgb.png 1 7
+
+0.8014978518810658
+
+python ./test.py Bandhavgarh.tiff Bandhavgarh-64-luv.png 1 5
+
+0.8570489415887166
+
+python ./test.py BabyGiraffe.tiff BabyGiraffe-64-luv.png 1 5
+
+0.8703599994684076
+
+python ./test.py statlab.tiff statlab-64-rgb.png 1 5
+
+0.7952799730696498
+
 
 
 

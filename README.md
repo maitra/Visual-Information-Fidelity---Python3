@@ -22,8 +22,11 @@ Let imref and imdist denote reference and distorted images respectively. Further
 VIF = vifvec(imref, imdist, sigmasq, M)
 
 
-A demo code is provided in test.py for testing purposes
+A demo code is provided in test.py for testing purposes with some example datasets:
 
-python3 ./test.py ultadanga.tiff ultadanga-64-rgb.png 1 7
+_python3 ./test.py ultadanga.tiff ultadanga-64-rgb.png 1 7
+This yields: _0.8014978518810658
+
+
 
 [1]H.R. Sheikh, A.C. Bovik and G. de Veciana, "An information fidelity criterion for image quality assessment using natural scene statistics," IEEE Transactions on Image Processing , vol.14, no.12pp. 2117- 2128, Dec. 2005.

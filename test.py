@@ -17,4 +17,4 @@ imdist = np.array(Image.open(b).convert('L')).astype(float)
 #Calculate VIF score
 
 vif_score = vifvec(imref, imdist, sigmasq, M)
-print(float(vif_score))
+print(float(vif_score[0]))
